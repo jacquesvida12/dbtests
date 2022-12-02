@@ -1,0 +1,68 @@
+<%- include("_header") -%>
+
+<h2> Find Products</h2>
+
+<h4>Total number of records in the database: <%= totRecs %></h4>
+
+<!-- Not using bootstrap, just a simple form that you may enhance -->
+<form action="/search" method="POST">
+    <table>
+        <tr>
+            <td><label for="prod_id">ID</label>:</td>
+            <td><input type="number" name="prod_id" id="prod_id" value="<%= prod.prod_id %>" /></td>
+            <td>(equal)</td>
+        </tr>
+        <tr>
+            <td><label for="prod_name">Name</label>:</td>
+            <td><input type="text" name="prod_name" id="prod_name" value="<%= prod.prod_name %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="prod_desc">Description</label>:</td>
+            <td><input type="text" name="prod_desc" id="prod_desc" value="<%= prod.prod_desc %>" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="prod_price">Price</label>:</td>
+            <td><input type="text" name="prod_price" id="prod_price" value="<%= prod.prod_price %>" /></td>
+            <td>(greater than or equal)</td>
+        </tr>
+        <tr>
+            <td span="2">
+                <input type="submit" value="Find" />
+                <input type="reset" value="Reset" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<!-- Omitted Error Checking / Needs to be added -->
+<% if (type === "post") { %>
+    <% if (result.result.length === 0) { %>
+        <h3>No records found!</h3>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Desc</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% result.result.forEach(product => { %> 
+                    <tr>
+                        <td><%= product.prod_id %></td>
+                        <td><%= product.prod_name %></td>
+                        <td><%= product.prod_desc %></td>
+                        <td><%= product.prod_price %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+
+        </table>
+    <% } %>
+<% } %>
+
+<%- include("_footer") -%>   
